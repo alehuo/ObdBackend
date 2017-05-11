@@ -1,14 +1,15 @@
 var jwt = require('jwt-simple');
 var User = require('./models/User.js');
+var config = require('./config.js');
 module.exports = function(req, res, next) {
   //Try to extract token from the request
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   if (token) {
     try {
       //Decoded JWT
-      var decoded = jwt.decode(token, app.get('KEY'));
+      var decoded = jwt.decode(token, config.secret_key);
       if (decoded.exp <= Date.now()) {
-        res.end('Token has expired', 400);
+        res.json({success: false, message: 'Access token has expired'});
       }
       //If an user is found
       User.findOne({
@@ -16,15 +17,20 @@ module.exports = function(req, res, next) {
           id: decoded.user.id
         }
       }, function(err, user) {
-        console.log(user);
-        req.user = user;
+        if (user.password != req.body.password) {
+          res.json({success: false, message: 'Invalid username or password'});
+        } else {
+          console.log("Authentication successful");
+          next();
+        }
       });
     } catch (err) {
-      return next();
+      res.json({success: false, message: 'Invalid access token'});
+      console.log(err);
     }
   } else {
     //todo
-    console.log('No token found');
+    res.json({success: false, message: 'No access token found'});
     next();
   }
 };

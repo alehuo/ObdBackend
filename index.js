@@ -12,7 +12,6 @@ var port = process.env.PORT || 8080;
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.set('KEY', config.secret_key);
 
 //Database connectivity
 var sequelize = new Sequelize('', '', '', {
@@ -30,7 +29,6 @@ var sequelize = new Sequelize('', '', '', {
 
 var User = sequelize.import ('./models/User.js');
 
-
 //Temporary workaround
 create_db(sequelize);
 
@@ -39,42 +37,41 @@ app.get('/', function(req, res) {
 });
 
 //List all users (User authentication middleware is used here)
-app.get('/api/list_users', [userAuthentication], function(req, res) {
+app.get('/api/list_users', userAuthentication, function(req, res) {
   User.findAll().then(function(users) {
     res.json(users)
   })
 });
 
-//Authentication of an user
+//Authentication of a user
 app.post('/authentication', function(req, res) {
-  var usrname = req.body.username;
   User.findOne({
     where: {
-      username: usrname
+      username: req.body.username,
+      password: req.body.password
     }
   }).then(function(user) {
     var response = {
-      error: 'Invalid username or password'
+      success: false,
+      message: 'Invalid username or password'
     };
     if (user) {
       //Expire within a week
-      var expires = moment().add('days', 7).valueOf();
+      var expires = moment().add(7, 'days').valueOf();
       //Create token
       var token = jwt.encode({
         iss: user.id,
-        exp: expires
-      }, app.get('KEY'));
+        exp: expires,
+        user: user.toJSON()
+      }, config.secret_key);
       //Build response
       response = {
+        success: true,
+        message: 'Authentication successful',
         token: token,
-        expires: expires,
-        user: user.toJSON(),
-        error: false
+        expires: expires
       };
     }
-
-    //Log to console
-    console.log(response);
     //Send to browser
     res.json(response);
   }, function(err) {
@@ -82,7 +79,7 @@ app.post('/authentication', function(req, res) {
   });
 });
 
-//Start server
+//Start Exoress
 app.listen(port, function(err) {
   console.log('Listening on port', port);
 });
