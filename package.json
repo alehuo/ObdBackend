@@ -1,25 +1,26 @@
 {
-  "name": "obd-backend",
+  "name": "ObdBackend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alehuo/obd-backend.git"
+    "url": "git+https://github.com/alehuo/ObdBackend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alehuo/obd-backend/issues"
+    "url": "https://github.com/alehuo/ObdBackend/issues"
   },
   "engines": {
     "node": "7.9.0"
   },
-  "homepage": "https://github.com/alehuo/obd-backend#readme",
+  "homepage": "https://github.com/alehuo/ObdBackend#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
@@ -30,5 +31,8 @@
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.30.4",
     "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

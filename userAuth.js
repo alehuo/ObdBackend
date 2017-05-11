@@ -1,6 +1,7 @@
 var jwt = require('jwt-simple');
 var User = require('./models/User.js');
 module.exports = function(req, res, next) {
+  //Try to extract token from the request
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   if (token) {
     try {
@@ -22,6 +23,7 @@ module.exports = function(req, res, next) {
       return next();
     }
   } else {
+    //todo
     console.log('No token found');
     next();
   }

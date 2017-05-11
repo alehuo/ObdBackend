@@ -38,14 +38,14 @@ app.get('/', function(req, res) {
   res.send('Hello world!');
 });
 
-//List all users
+//List all users (User authentication middleware is used here)
 app.get('/api/list_users', [userAuthentication], function(req, res) {
   User.findAll().then(function(users) {
     res.json(users)
   })
 });
 
-//Authentication test
+//Authentication of an user
 app.post('/authentication', function(req, res) {
   var usrname = req.body.username;
   User.findOne({
@@ -82,6 +82,7 @@ app.post('/authentication', function(req, res) {
   });
 });
 
+//Start server
 app.listen(port, function(err) {
   console.log('Listening on port', port);
 });
