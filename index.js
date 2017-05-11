@@ -42,7 +42,7 @@ app.get('/', function(req, res) {
 app.post('/authentication', function(req, res) {
   var usrname = req.body.username;
   var passwd = req.body.password;
-  console.log(username, passwd);
+  console.log(usrname, passwd);
   res.send(req.body);
 });
 
