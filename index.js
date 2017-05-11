@@ -37,7 +37,7 @@ app.get('/', function(req, res) {
 });
 
 //List all users (User authentication middleware is used here)
-app.get('/api/list_users', userAuthentication, function(req, res) {
+app.get('/api/list_users', userAuthentication(User), function(req, res) {
   User.findAll().then(function(users) {
     res.json(users)
   })
