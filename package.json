@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/alehuo/obd-backend/issues"
   },
+  "engines": {
+    "node": "7.9.0"
+  },
   "homepage": "https://github.com/alehuo/obd-backend#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
