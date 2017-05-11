@@ -1,4 +1,4 @@
-| Date        | Descroption           | Hours  |
+| Date        | Description           | Hours  |
 | ------------- |:-------------:| -----:|
 | 9.5.2017    | Creating repositories and working environment | 5h |
 | 10.5.2017   | Designing      |   2h |

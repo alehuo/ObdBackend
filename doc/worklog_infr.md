@@ -1,3 +1,3 @@
-| Date        | Descroption           | Hours  |
+| Date        | Description           | Hours  |
 | ------------- |:-------------:| -----:|
 | x    | x | x |
