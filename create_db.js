@@ -1,6 +1,5 @@
-var Sequelize = require('sequelize');
-module.exports = function(sequelize, User) {
-
+module.exports = function(sequelize) {
+  var User = sequelize.import ('./models/User.js');
   sequelize.sync().then(function() {
     User.destroy({truncate: true}).then(function(cb) {
       User.bulkCreate([
