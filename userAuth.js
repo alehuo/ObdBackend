@@ -1,6 +1,5 @@
 var jwt = require('jwt-simple');
-
-var config = require('./config.js');
+var config = require('./config/config.js');
 module.exports = function(User) {
   return function(req, res, next) {
     //Try to extract token from the request
