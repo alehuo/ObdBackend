@@ -10,10 +10,10 @@ module.exports = function(User) {
         //Decoded JWT
         var decoded = jwt.decode(token, config.secret_key);
         if (decoded.exp <= Date.now()) {
+					res.status(401);
           res.json({success: false, message: 'Access token has expired'});
         }
-        console.log(decoded);
-        //If an user is found
+        //If user exists in database
         User.findOne({
           where: {
             id: decoded.user.id
@@ -22,17 +22,18 @@ module.exports = function(User) {
           if (user) {
             next();
           } else {
+            res.status(401);
             res.json({success: false, message: 'Credentials for access token not found'});
           }
         });
       } catch (err) {
+        res.status(401);
         res.json({success: false, message: 'Invalid access token'});
         console.log(err);
       }
     } else {
-      //todo
+      res.status(401);
       res.json({success: false, message: 'No access token found'});
-      next();
     }
   }
 };
