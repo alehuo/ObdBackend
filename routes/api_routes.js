@@ -1,4 +1,4 @@
-module.exports = function() {
+module.exports = function(sequelize) {
 
     //Express
     var express = require('express');
@@ -14,7 +14,6 @@ module.exports = function() {
     var config = require('../config/config.js');
     //Sequelize
     var Sequelize = require('sequelize');
-    var sequelize = new Sequelize('sqlite://database.sqlite');
     var User = sequelize.import ('../database/models/User.js');
 
     //List all users

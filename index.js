@@ -37,7 +37,7 @@ app.get('/', function(req, res) {
     res.send('Hello world! Visit the API at /api');
 });
 
-app.use('/api', apiRoutes());
+app.use('/api', apiRoutes(sequelize));
 
 //Start Express
 app.listen(port, function(err) {
