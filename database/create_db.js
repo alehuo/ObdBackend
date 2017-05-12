@@ -1,7 +1,8 @@
 /*
 Database tables are created here
  */
-module.exports = function(User) {
+module.exports = function(sequelize) {
+    var User = sequelize.import ('./models/User.js');
     User.sync({force: true}).then(function() {
         User.bulkCreate([
             {
@@ -13,5 +14,4 @@ module.exports = function(User) {
             }
         ]);
     });
-
 }

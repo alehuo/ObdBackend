@@ -16,8 +16,6 @@ var moment = require('moment');
 var create_db = require('./database/create_db.js');
 //Config
 var config = require('./config/config.js');
-//User authentication
-var userAuthentication = require('./userAuth.js');
 //API routes
 var apiRoutes = require('./routes/api_routes.js');
 
@@ -29,29 +27,17 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //Database connectivity
-var sequelize = new Sequelize('', '', '', {
-    host: 'localhost',
-    dialect: 'sqlite',
+var sequelize = new Sequelize('sqlite:///database.sqlite');
 
-    pool: {
-        max: 5,
-        min: 0,
-        idle: 10000
-    },
-
-    storage: 'database.sqlite'
-});
-
-//User model
-var User = sequelize.import ('./database/models/User.js');
 //Create database tables
-create_db(User);
+create_db(sequelize);
 
+//Default route
 app.get('/', function(req, res) {
-    res.send('Hello world!');
+    res.send('Hello world! Visit the API at /api');
 });
 
-apiRoutes(app, User, jwt, moment, config, userAuthentication);
+app.use('/api', apiRoutes());
 
 //Start Express
 app.listen(port, function(err) {

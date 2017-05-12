@@ -1,13 +1,30 @@
-module.exports = function(app, User, jwt, moment, config, userAuthentication) {
+module.exports = function() {
+
+    //Express
+    var express = require('express');
+    //Router
+    var router = express();
+    //User authentication
+    var userAuthentication = require('../userAuth.js');
+    //JSON Web Tokens
+    var jwt = require('jwt-simple');
+    //Moment
+    var moment = require('moment');
+    //Config
+    var config = require('../config/config.js');
+    //Sequelize
+    var Sequelize = require('sequelize');
+    var sequelize = new Sequelize('sqlite://database.sqlite');
+    var User = sequelize.import ('../database/models/User.js');
 
     //List all users
-    app.get('/api/users', userAuthentication(User), function(req, res) {
+    router.get('/users', userAuthentication(User), function(req, res) {
         User.findAll().then(function(users) {
             res.json(users)
         })
     });
     //Register a new user
-    app.post('/api/users', function(req, res) {
+    router.post('/users', function(req, res) {
         User.sync().then(function() {
             User.find({
                 where: {
@@ -34,7 +51,7 @@ module.exports = function(app, User, jwt, moment, config, userAuthentication) {
     });
 
     //Authentication of a user
-    app.post('/api/authentication', function(req, res) {
+    router.post('/authentication', function(req, res) {
         User.findOne({
             where: {
                 username: req.body.username,
@@ -61,4 +78,6 @@ module.exports = function(app, User, jwt, moment, config, userAuthentication) {
             res.json({success: false, message: 'Error'});
         });
     });
+
+    return router;
 }
