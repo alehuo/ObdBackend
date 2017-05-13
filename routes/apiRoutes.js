@@ -15,10 +15,23 @@ module.exports = function() {
   //Sequelize
   var db = require('../database/db.js');
 
+  var userAttribs = ['id', 'username'];
+
   //List all users
   router.get('/users', userAuthentication(db.User), function(req, res) {
-    db.User.findAll().then(function(users) {
+    db.User.findAll({attributes: userAttribs}).then(function(users) {
       res.json(users)
+    })
+  });
+  //List a single user
+  router.get('/users/:id', userAuthentication(db.User), function(req, res) {
+    db.User.find({
+      attributes: userAttribs,
+      where: {
+        id: req.params.id
+      }
+    }).then(function(user) {
+      res.json(user)
     })
   });
   //Register a new user
