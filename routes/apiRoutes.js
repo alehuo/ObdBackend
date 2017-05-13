@@ -77,5 +77,53 @@ module.exports = function() {
     });
   });
 
+  /* ------------- Car ------------ */
+
+  // Return cars display name
+  // Accepts vin
+  router.post('/car', function(req, res) {
+    db.Car.findOne({
+      where: {
+        Vin: req.body.vin
+      }
+    }).then(function(car){
+      if(car){
+        res.status(200);
+        res.json({success: true, message: 'Car found', car});
+      } else {
+        res.status(400);
+        res.json({success: false, message: 'Could not find the car'});
+      }
+    }, function(err) {
+      res.status(400);
+      res.json({success: false, message: 'Error'});
+    })
+  });
+
+  /* ------------- Location ------------ */
+
+  // This function will return all LocationPoints for car
+  // Accepts Car
+  router.post('/location', function(req, res) {
+    db.LocationPoint.findAll({
+      where: {
+        Car: req.body.car
+      }
+    }).then(function(LocationPoints){
+      console.log(LocationPoints)
+      if(LocationPoints){
+        res.status(200);
+        res.json({success: true, message: 'Location history found', LocationPoints});
+      } else {
+        res.status(400);
+        res.json({success: false, message: 'Could not find the location history'});
+      }
+    }, function(err) {
+      res.status(400);
+      res.json({success: false, message: 'Error'});
+    })
+  });
+
+
   return router;
 }
