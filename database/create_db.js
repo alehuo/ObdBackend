@@ -30,33 +30,33 @@ module.exports = function() {
           {
             GpsLon: 60.199172,
             GpsLat: 24.986826,
-            Car: 1,
-            Timestamp: 1494694203
+            CarId: 1,
+            Timestamp: '2017-05-14 15:36:00'
           }, {
             GpsLon: 60.199172,
             GpsLat: 24.996826,
-            Car: 1,
-            Timestamp: 1494694000
+            CarId: 1,
+            Timestamp: '2017-05-14 15:39:00'
           }, {
             GpsLon: 60.299172,
             GpsLat: 24.986826,
-            Car: 2,
-            Timestamp: 1494690000
+            CarId: 2,
+            Timestamp: '2017-05-14 15:41:00'
           }
         ]);
       });
       db.SensorData.sync({force: true}).then(function() {
           db.SensorData.bulkCreate([
             {
-              Car: 1,
+              CarId: 1,
               Sensor: 'RPM',
               Value: '1000',
-              Timestamp: 1494690000
+              Timestamp: '2017-05-14 15:36:00'
             }, {
-              Car: 1,
+              CarId: 1,
               Sensor: 'RPM',
               Value: '1500',
-              Timestamp: 1494690005
+              Timestamp: '2017-05-14 15:41:00'
             }
           ]);
         });
