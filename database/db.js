@@ -8,9 +8,11 @@ var sequelize = new Sequelize(config.database.test);
 var User = sequelize.import('./models/User.js');
 var Car = sequelize.import('./models/Car.js');
 var LocationPoint = sequelize.import('./models/LocationPoint.js');
+var SensorData = sequelize.import('./models/SensorData.js');
 
 module.exports.Sequelize = Sequelize;
 module.exports.sequelize = sequelize;
 module.exports.User = User;
 module.exports.Car = Car;
 module.exports.LocationPoint = LocationPoint;
+module.exports.SensorData = SensorData;

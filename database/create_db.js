@@ -45,4 +45,19 @@ module.exports = function() {
           }
         ]);
       });
+      db.SensorData.sync({force: true}).then(function() {
+          db.SensorData.bulkCreate([
+            {
+              Car: 1,
+              Sensor: 'RPM',
+              Value: '1000',
+              Timestamp: 1494690000
+            }, {
+              Car: 1,
+              Sensor: 'RPM',
+              Value: '1500',
+              Timestamp: 1494690005
+            }
+          ]);
+        });
 }

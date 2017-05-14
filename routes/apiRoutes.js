@@ -94,10 +94,10 @@ module.exports = function() {
 
   // Return cars display name
   // Accepts vin
-  router.post('/car', function(req, res) {
+  router.get('/car/:vin', function(req, res) {
     db.Car.findOne({
       where: {
-        Vin: req.body.vin
+        Vin: req.params.vin
       }
     }).then(function(car){
       if(car){
@@ -116,14 +116,13 @@ module.exports = function() {
   /* ------------- Location ------------ */
 
   // This function will return all LocationPoints for car
-  // Accepts Car
-  router.post('/location', function(req, res) {
+  // Accepts Car id
+  router.get('/location/:car', function(req, res) {
     db.LocationPoint.findAll({
       where: {
-        Car: req.body.car
+        Car: req.params.car
       }
     }).then(function(LocationPoints){
-      console.log(LocationPoints)
       if(LocationPoints){
         res.status(200);
         res.json({success: true, message: 'Location history found', LocationPoints});
@@ -136,6 +135,53 @@ module.exports = function() {
       res.json({success: false, message: 'Error'});
     })
   });
+
+  /* ------------- SensorData ------------ */
+
+  // This function will return all SensorData for car
+  // Accepts Car id
+  router.get('/sensordata/:car', function(req, res) {
+    db.SensorData.findAll({
+      where: {
+        Car: req.params.car
+      }
+    }).then(function(SensorData){
+      if(SensorData){
+        res.status(200);
+        res.json({success: true, message: 'Sensor history found', SensorData});
+      } else {
+        res.status(400);
+        res.json({success: false, message: 'Could not find the sensor history'});
+      }
+    }, function(err) {
+      res.status(400);
+      res.json({success: false, message: 'Error'});
+    })
+  });
+
+  router.post('/sensordata', function(req, res) {
+    db.SensorData.sync({force: false}).then(function() {
+      db.SensorData.create({
+        Car: req.params.Car,
+        Sensor: req.params.Sensor,
+        Value: req.params.Value,
+        Timestamp: req.params.Timestamp,
+      }).then(function(db){
+        console.log("Create: "+db);
+        if(db){
+          res.status(200);
+          res.json({success: true, message: 'Sensor history inserted'});
+        } else {
+          res.status(400);
+          res.json({success: false, message: 'Could not insert sensor history'});
+        }
+    }, function(err) {
+        res.status(400);
+        res.json({success: false, message: 'Error'});
+      })
+  })
+});
+
 
 
   return router;
