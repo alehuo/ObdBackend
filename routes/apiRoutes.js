@@ -146,6 +146,7 @@ module.exports = function() {
         CarId: req.params.car
       }
     }).then(function(SensorData) {
+      console.log("SensorData: " + SensorData)
       if (SensorData) {
         res.status(200);
         res.json({success: true, message: 'Sensor history found', SensorData});
