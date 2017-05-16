@@ -12,7 +12,8 @@ module.exports.database = {
   },
   test: {
     "dialect": "sqlite",
-    "storage": ":memory:"
+    "storage": ":memory:",
+		logging: false
   },
   production: {
     "dialect": "postgresql",

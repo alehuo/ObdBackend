@@ -23,12 +23,12 @@ create_db();
 
 //Default route
 app.get('/', function(req, res) {
-    res.send('Hello world! Visit the API at /api');
+  res.send('Hello world! Visit the API at /api');
 });
 
 app.use('/api', apiRoutes());
 
 //Start Express
 app.listen(port, function(err) {
-    console.log('Listening on port', port);
+  console.log('Listening on port', port);
 });

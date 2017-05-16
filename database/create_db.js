@@ -13,19 +13,21 @@ module.exports = function() {
         password: 'user'
       }
     ]);
-  });
-  db.Car.sync({force: true}).then(function() {
+  }).then(function() {
+    db.Car.sync({force: true}).then(function() {
       db.Car.bulkCreate([
         {
           Vin: '123',
-          DisplayName: 'Toyoda'
+          DisplayName: 'Toyoda',
+          UserId: 1
         }, {
           Vin: '000',
-          DisplayName: 'Furrari'
+          DisplayName: 'Furrari',
+          UserId: 1
         }
       ]);
-    });
-    db.LocationPoint.sync({force: true}).then(function() {
+    }).then(function() {
+      db.LocationPoint.sync({force: true}).then(function() {
         db.LocationPoint.bulkCreate([
           {
             GpsLon: 60.199172,
@@ -44,8 +46,8 @@ module.exports = function() {
             Timestamp: '2017-05-14 15:41:00'
           }
         ]);
-      });
-      db.SensorData.sync({force: true}).then(function() {
+      }).then(function() {
+        db.SensorData.sync({force: true}).then(function() {
           db.SensorData.bulkCreate([
             {
               CarId: 1,
@@ -60,4 +62,8 @@ module.exports = function() {
             }
           ]);
         });
+      });
+    });
+  });
+
 }

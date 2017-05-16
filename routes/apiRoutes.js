@@ -25,6 +25,7 @@ module.exports = function() {
   });
   //List a single user
   router.get('/users/:id', userAuthentication(db.User), function(req, res) {
+    console.log('jee1');
     db.User.find({
       attributes: userAttribs,
       where: {
@@ -33,6 +34,28 @@ module.exports = function() {
     }).then(function(user) {
       res.json(user)
     })
+  });
+  //List current user
+  router.get('/currentuser', userAuthentication(db.User), function(req, res) {
+    var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
+    //Decoded JWT
+    var decoded = jwt.decode(token, config.token.secret_key);
+    db.Car.findAll({
+      where: {
+        UserId: decoded.user.id
+      }
+    }).then(function(cars) {
+      res.json({
+        success: true,
+        message: 'Current user fetched successfully',
+        user: {
+          id: decoded.user.id,
+          username: decoded.user.username
+        },
+        cars: cars
+      });
+    });
+
   });
   //Register a new user
   router.post('/users', function(req, res) {

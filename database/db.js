@@ -10,16 +10,17 @@ var config = require('../config/config.js');
 */
 var sequelize = new Sequelize(config.database.test);
 
-var User = sequelize.import('./models/User.js');
-var Car = sequelize.import('./models/Car.js');
-var LocationPoint = sequelize.import('./models/LocationPoint.js');
-var SensorData = sequelize.import('./models/SensorData.js');
+var User = sequelize.import ('./models/User.js');
+var Car = sequelize.import ('./models/Car.js');
+var LocationPoint = sequelize.import ('./models/LocationPoint.js');
+var SensorData = sequelize.import ('./models/SensorData.js');
 
+//Car has a user
+Car.belongsTo(User);
 //Car has SensorData (One to Many)
 SensorData.belongsTo(Car);
 //Car has LocationPoints (One To Many)
 LocationPoint.belongsTo(Car);
-//ADD: User has SensorData and LocationPoints
 
 module.exports.Sequelize = Sequelize;
 module.exports.sequelize = sequelize;
