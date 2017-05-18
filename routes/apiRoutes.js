@@ -165,7 +165,7 @@ module.exports = function() {
         {
           CarId: req.body.carId,
           Speed: req.body.speed,
-          GpsLat: req.body.latitute,
+          GpsLat: req.body.latitude,
           GpsLon: req.body.longitude,
           Accuracy: req.body.accuracy,
           Altitude: req.body.altitude,
