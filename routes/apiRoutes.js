@@ -159,6 +159,35 @@ module.exports = function() {
     })
   });
 
+  router.post('/location', userAuthentication(db.User), function(req, res) {
+    db.LocationPoint.sync().then(function() {
+      db.LocationPoint.create(
+        {
+          CarId: req.body.carId,
+          Speed: req.body.speed,
+          GpsLat: req.body.lat,
+          GpsLon: req.body.lon,
+          Accuracy: req.body.accuracy,
+          Altitude: req.body.altitude,
+          Heading: req.body.heading,
+          Timestamp: req.body.ts}
+        ).then(function(db) {
+        console.log("Create: " + db);
+        if (db) {
+          res.status(200);
+          res.json({success: true, message: 'Location data inserted'});
+        } else {
+          res.status(400);
+          res.json({success: false, message: 'Could not insert locationd ata'});
+        }
+      }, function(err) {
+        res.status(400);
+        res.json({success: false, message: 'Error'});
+      })
+    })
+  });
+
+
   /* ------------- SensorData ------------ */
 
   // This function will return all SensorData for car

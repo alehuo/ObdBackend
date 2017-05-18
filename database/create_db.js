@@ -32,18 +32,30 @@ module.exports = function() {
           {
             GpsLon: 60.199172,
             GpsLat: 24.986826,
+            Accuracy: 8,
             CarId: 1,
-            Timestamp: '2017-05-14 15:36:00'
+            Speed: 160,
+            Altitude: 57,
+            Heading: 330,
+            Timestamp: 1495109157000
           }, {
             GpsLon: 60.199172,
             GpsLat: 24.996826,
+            Accuracy: 5,
             CarId: 1,
-            Timestamp: '2017-05-14 15:39:00'
+            Speed: 160,
+            Altitude: 57,
+            Heading: 330,
+            Timestamp: 1495129157000
           }, {
             GpsLon: 60.299172,
             GpsLat: 24.986826,
+            Accuracy: 15,
             CarId: 2,
-            Timestamp: '2017-05-14 15:41:00'
+            Speed: 160,
+            Altitude: 57,
+            Heading: 330,
+            Timestamp: 1495129157000
           }
         ]);
       }).then(function() {
@@ -53,12 +65,12 @@ module.exports = function() {
               CarId: 1,
               Sensor: 'RPM',
               Value: '1000',
-              Timestamp: '2017-05-14 15:36:00'
+              Timestamp: 1495129157000
             }, {
               CarId: 1,
               Sensor: 'RPM',
               Value: '1500',
-              Timestamp: '2017-05-14 15:41:00'
+              Timestamp: 1495129157000
             }
           ]);
         });
