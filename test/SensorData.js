@@ -39,6 +39,15 @@ describe('GET, without auth', () => {
       done();
     });
 });
+it('GET /logging, should return 401', (done) => {
+  chai.request(app)
+  .get('/logging/1')
+  .end(function(err, res) {
+    res.should.have.status(401);
+    done();
+  });
+});
+
 });
 describe('POST, without auth', () => {
   it('POST /sensordata, should return 401', (done) => {
@@ -50,6 +59,17 @@ describe('POST, without auth', () => {
       done();
     });
   });
+
+  it('POST /logging, should return 401');/*, (done) => {
+    chai.request(app)
+    .post('/car')
+    .send({Vin: '123', DisplayName: 'Toyoda'})
+    .end(function(err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });*/
+
   it('POST /car, should return 401');/*, (done) => {
     chai.request(app)
     .post('/car')
@@ -70,6 +90,8 @@ describe('POST, without auth', () => {
   });*/
 });
 
+
+
 describe('POST /sensordata with auth', () => {
   it('With auth, should return: 200', (done) => {
     chai.request(app)
@@ -81,6 +103,8 @@ describe('POST /sensordata with auth', () => {
     });
   });
 });
+
+
 
   /*
 

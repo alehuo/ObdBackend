@@ -74,6 +74,20 @@ module.exports = function() {
             }
           ]);
         });
+      }).then(function() {
+        db.Logging.sync({force: true}).then(function() {
+          db.Logging.bulkCreate([
+            {
+              CarId: 1,
+              loggingStart: 1495121157000,
+              loggingEnd: 1495129157000
+            }, {
+              CarId: 1,
+              loggingStart: 1495521157000,
+              loggingEnd: 1495529157000
+            }
+          ]);
+        });
       });
     });
   });

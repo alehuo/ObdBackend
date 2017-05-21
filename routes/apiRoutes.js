@@ -230,5 +230,47 @@ module.exports = function() {
     })
   });
 
+  /* ------------------ Logging --------------- */
+  router.post('/logging', userAuthentication(db.User), function(req, res) {
+    db.SensorData.sync().then(function() {
+      db.SensorData.create({
+          CarId: req.body.Car,
+          loggingStart: req.body.Sensor,
+          loggingEnd: req.body.Value,
+        }).then(function(db) {
+        if (db) {
+          res.status(200);
+          res.json({success: true, message: 'Log inserted'});
+        } else {
+          res.status(400);
+          res.json({success: false, message: 'Could not insert log'});
+        }
+      }, function(err) {
+        res.status(400);
+        res.json({success: false, message: 'Error'});
+      })
+    })
+  });
+
+  router.get('/logging/:car', userAuthentication(db.User), function(req, res) {
+    db.SensorData.findAll({
+      where: {
+        CarId: req.params.car
+      }
+    }).then(function(Logging) {
+      if (Logging) {
+        res.status(200);
+        res.json({success: true, message: 'Log found', Logging});
+      } else {
+        res.status(400);
+        res.json({success: false, message: 'Could not find log'});
+      }
+    }, function(err) {
+      res.status(400);
+      res.json({success: false, message: 'Error'});
+    })
+  });
+
+
   return router;
 }
