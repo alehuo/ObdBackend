@@ -4,13 +4,31 @@ var assert = require('assert');
 var chai = require('chai')
   , chaiHttp = require('chai-http');
 
-var app = "http://localhost:8080/api"
+var port = process.env.PORT || 5000;
+var express = require('express');
+var app = express();
+
+/*var app = "http://localhost:8080/api"*/
+var apiRoutes = require('./../routes/apiRoutes.js');
+var create_db = require('./../database/create_db.js');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+app.use('/api', apiRoutes());
+
+app.listen(port, function(err) {
+  console.log('Listening on port', port);
+});
 
 //var server = require('./../index.js')
 /*let mongoose = require("mongoose");*/
 
-let SensorData = require('./../database/models/SensorData.js');
+//let SensorData = require('./../database/models/SensorData.js');
 let should = chai.should();
+
+create_db();
 
 chai.use(chaiHttp);
 
