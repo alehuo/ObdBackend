@@ -90,21 +90,63 @@ describe('POST, without auth', () => {
   });*/
 });
 
+/*
 
+ */
 
-describe('POST /sensordata with auth', () => {
-  it('With auth, should return: 200', (done) => {
-    chai.request(app)
-    .post('/sensordata')
-    .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
-    .end(function(err, res) {
-      res.should.have.status(401);
+describe('POST, with auth', () => {
+  it('POST /sensordata, should return 200', (done) => {
+    authentication('user','user',(res) => {
+      chai.request(app)
+      .post('/sensordata')
+      .set('x-access-token', res.body.token)
+      .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
+      .end(function(err, res) {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });
+  //Hello world
+  /*it('post /location, should return: 200', (done) => {
+		chai.request(app)
+		.post('/authentication').send({username: 'admin', password: 'admin'}).end(function(err, res) {
+      res.should.have.status(200);
+      var token = res.body.token;
+      chai.request(app)
+      .post('/sensordata')
+      .set('x-access-token', token)
+      .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
+      .end(function(err, res) {
+        res.should.have.status(200);
+        done();
+      });
+    });
+  });*/
+});
+
+describe('Authentication test', () => {
+  it('Authentication with wrong credentials should return 400', (done) => {
+		authentication('wrong','credentials',(res) => {
+      res.should.have.status(400);
+      done();
+    });
+  });
+  it('Authentication with correct credentials should return 200', (done) => {
+    authentication('user','user',(res) => {
+      res.should.have.status(200);
       done();
     });
   });
 });
 
-
+//Authentication function
+const authentication = (username, password, fn) => {
+  chai.request(app)
+  .post('/authentication').send({username: username, password: password}).end(function(err, res) {
+    fn(res)
+  });
+}
 
   /*
 
