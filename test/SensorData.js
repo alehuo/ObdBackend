@@ -4,11 +4,12 @@ var assert = require('assert');
 var chai = require('chai')
   , chaiHttp = require('chai-http');
 
-var port = process.env.PORT || 5000;
+
+var port = process.env.PORT || 8080;
 var express = require('express');
 var app = express();
 
-/*var app = "http://localhost:8080/api"*/
+/*app = "http://localhost:8080/api"*/
 var apiRoutes = require('./../routes/apiRoutes.js');
 var create_db = require('./../database/create_db.js');
 var bodyParser = require('body-parser');
@@ -17,23 +18,25 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use('/api', apiRoutes());
-
+/*
 app.listen(port, function(err) {
   console.log('Listening on port', port);
-});
+});*/
 
-//var server = require('./../index.js')
+create_db();
+app = "http://localhost:8080/api"
+/*var server = require('./../index.js')
 /*let mongoose = require("mongoose");*/
 
 //let SensorData = require('./../database/models/SensorData.js');
 let should = chai.should();
 
-create_db();
+
 
 chai.use(chaiHttp);
 
-describe('GET, without auth', () => {
-  it('GET /sensordata, should return 401', (done) => {
+describe('/sensordata ', () => {
+  it('GET, without auth, should return 401', (done) => {
     chai.request(app)
     .get('/sensordata/1')
     .end(function(err, res) {
@@ -41,34 +44,7 @@ describe('GET, without auth', () => {
       done();
     });
   });
-  it('GET /car, should return 401', (done) => {
-    chai.request(app)
-    .get('/car/1')
-    .end(function(err, res) {
-      res.should.have.status(401);
-      done();
-    });
-  });
-  it('GET /location, should return 401', (done) => {
-    chai.request(app)
-    .get('/location/1')
-    .end(function(err, res) {
-      res.should.have.status(401);
-      done();
-    });
-});
-it('GET /logging, should return 401', (done) => {
-  chai.request(app)
-  .get('/logging/1')
-  .end(function(err, res) {
-    res.should.have.status(401);
-    done();
-  });
-});
-
-});
-describe('POST, without auth', () => {
-  it('POST /sensordata, should return 401', (done) => {
+  it('POST, without auth, should return 401', (done) => {
     chai.request(app)
     .post('/sensordata')
     .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
@@ -77,8 +53,26 @@ describe('POST, without auth', () => {
       done();
     });
   });
-
-  it('POST /logging, should return 401');/*, (done) => {
+  it('POST, with auth, should return 200', (done) => {
+    chai.request(app)
+    .post('/sensordata')
+    .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
+    .end(function(err, res) {
+      res.should.have.status(200);
+      done();
+    });
+  });
+});
+describe('/car ', () => {
+  it('GET /1, without auth, should return 401', (done) => {
+    chai.request(app)
+    .get('/car/1')
+    .end(function(err, res) {
+      res.should.have.status(401);
+      done();
+    });
+  });
+  it('POST, without auth, should return 401');/*, (done) => {
     chai.request(app)
     .post('/car')
     .send({Vin: '123', DisplayName: 'Toyoda'})
@@ -87,17 +81,17 @@ describe('POST, without auth', () => {
       done();
     });
   });*/
-
-  it('POST /car, should return 401');/*, (done) => {
+});
+describe('/location ', () => {
+  it('GET /1, without auth, should return 401', (done) => {
     chai.request(app)
-    .post('/car')
-    .send({Vin: '123', DisplayName: 'Toyoda'})
+    .get('/location/1')
     .end(function(err, res) {
       res.should.have.status(401);
       done();
     });
-  });*/
-  it('POST /location, should return 401');/*, (done) => {
+  });
+  it('POST, without auth, should return 401');/*, (done) => {
     chai.request(app)
     .post('/location')
     .send({GpsLon: 60.199172, GpsLat: 24.986826, CarId: 1, Timestamp: '2017-05-14 15:36:00'})
@@ -107,20 +101,30 @@ describe('POST, without auth', () => {
     });
   });*/
 });
-
-
-
-describe('POST /sensordata with auth', () => {
-  it('With auth, should return: 200', (done) => {
+describe('/logging ', () => {
+it('GET /1, without auth, should return 401', (done) => {
+  chai.request(app)
+  .get('/logging/1')
+  .end(function(err, res) {
+    res.should.have.status(401);
+    done();
+  });
+});
+  it('POST, without auth, should return 401');/*, (done) => {
     chai.request(app)
-    .post('/sensordata')
-    .send({Sensor: 'RPM', Value: '14000', Timestamp: '2017-05-15T12:51:45+00:00'})
+    .post('/logging')
+    .send({Vin: '123', DisplayName: 'Toyoda'})
     .end(function(err, res) {
       res.should.have.status(401);
       done();
     });
-  });
+  });*/
 });
+
+
+
+
+
 
 
 
