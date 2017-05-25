@@ -1,7 +1,5 @@
 # ObdBackend
 
-https://obd-react.herokuapp.com/
-
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://travis-ci.com/alehuo/ObdBackend.svg?token=gaC7xtybK3sQe2uWiGwx&branch=master)](https://travis-ci.com/alehuo/ObdBackend)
 ![](https://david-dm.org/alehuo/ObdBackend.svg)
