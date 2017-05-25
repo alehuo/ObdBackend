@@ -159,6 +159,35 @@ module.exports = function() {
     })
   });
 
+  router.post('/location', userAuthentication(db.User), function(req, res) {
+    db.LocationPoint.sync().then(function() {
+      db.LocationPoint.create(
+        {
+          CarId: req.body.carId,
+          Speed: req.body.speed,
+          GpsLat: req.body.latitude,
+          GpsLon: req.body.longitude,
+          Accuracy: req.body.accuracy,
+          Altitude: req.body.altitude,
+          Heading: req.body.heading,
+          Timestamp: req.body.ts}
+        ).then(function(db) {
+        console.log("Create: " + db);
+        if (db) {
+          res.status(200);
+          res.json({success: true, message: 'Location data inserted'});
+        } else {
+          res.status(400);
+          res.json({success: false, message: 'Could not insert locationd ata'});
+        }
+      }, function(err) {
+        res.status(400);
+        res.json({success: false, message: 'Error'});
+      })
+    })
+  });
+
+
   /* ------------- SensorData ------------ */
 
   // This function will return all SensorData for car
@@ -200,6 +229,48 @@ module.exports = function() {
       })
     })
   });
+
+  /* ------------------ Logging --------------- */
+  router.post('/logging', userAuthentication(db.User), function(req, res) {
+    db.SensorData.sync().then(function() {
+      db.SensorData.create({
+          CarId: req.body.Car,
+          loggingStart: req.body.Sensor,
+          loggingEnd: req.body.Value,
+        }).then(function(db) {
+        if (db) {
+          res.status(200);
+          res.json({success: true, message: 'Log inserted'});
+        } else {
+          res.status(400);
+          res.json({success: false, message: 'Could not insert log'});
+        }
+      }, function(err) {
+        res.status(400);
+        res.json({success: false, message: 'Error'});
+      })
+    })
+  });
+
+  router.get('/logging/:car', userAuthentication(db.User), function(req, res) {
+    db.SensorData.findAll({
+      where: {
+        CarId: req.params.car
+      }
+    }).then(function(Logging) {
+      if (Logging) {
+        res.status(200);
+        res.json({success: true, message: 'Log found', Logging});
+      } else {
+        res.status(400);
+        res.json({success: false, message: 'Could not find log'});
+      }
+    }, function(err) {
+      res.status(400);
+      res.json({success: false, message: 'Error'});
+    })
+  });
+
 
   return router;
 }
