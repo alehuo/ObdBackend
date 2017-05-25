@@ -2,12 +2,26 @@
 
 https://obd-react.herokuapp.com/
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://travis-ci.com/alehuo/ObdBackend.svg?token=gaC7xtybK3sQe2uWiGwx&branch=master)](https://travis-ci.com/alehuo/ObdBackend)
 ![](https://david-dm.org/alehuo/ObdBackend.svg)
 
 ## License
 
-To do
+#### GNU GPL v3
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ## API routes
 
