@@ -3,7 +3,7 @@ module.exports = function() {
   //Express
   var express = require('express');
   //Router
-  var router = express();
+  var router = express.Router();
   //User authentication
   var userAuthentication = require('../auth/userAuth.js');
   //JSON Web Tokens

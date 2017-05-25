@@ -32,3 +32,5 @@ app.use('/api', apiRoutes());
 app.listen(port, function(err) {
   console.log('Listening on port', port);
 });
+
+module.exports = app;
