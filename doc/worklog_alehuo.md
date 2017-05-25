@@ -7,3 +7,5 @@
 | 14.5.2017 | Fixed req.params to req.body. Fixed test data timestamp format & added foreign key associations | 1h |
 | 16.5.2017 | Updated documentation and added API route to return current user | 2h |
 | 18.5.2017 | Added route to post location data. Modified LocationPoint database table | 1h |
+| 21.5.2017 | Added authentication testing & read about testing Node.js projects with Mocha | 4h |
+| 25.5.2017 | Fixed tests, connected Travis Ci to the git repository & made Travis automatically deploy to heroku. Updated project readme | 5h |

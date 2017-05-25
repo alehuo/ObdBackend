@@ -30,8 +30,8 @@ module.exports = function() {
       db.LocationPoint.sync({force: true}).then(function() {
         db.LocationPoint.bulkCreate([
           {
-            GpsLon: 60.199172,
-            GpsLat: 24.986826,
+            GpsLon: 24.986826,
+            GpsLat: 60.199172,
             Accuracy: 8,
             CarId: 1,
             Speed: 160,
@@ -39,8 +39,8 @@ module.exports = function() {
             Heading: 330,
             Timestamp: 1495109157000
           }, {
-            GpsLon: 60.199172,
-            GpsLat: 24.996826,
+            GpsLon: 24.986826,
+            GpsLat: 60.199172,
             Accuracy: 5,
             CarId: 1,
             Speed: 160,
@@ -48,8 +48,8 @@ module.exports = function() {
             Heading: 330,
             Timestamp: 1495129157000
           }, {
-            GpsLon: 60.299172,
-            GpsLat: 24.986826,
+            GpsLon: 24.986826,
+            GpsLat: 60.199172,
             Accuracy: 15,
             CarId: 2,
             Speed: 160,
