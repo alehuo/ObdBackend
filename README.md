@@ -2,6 +2,7 @@
 
 https://obd-react.herokuapp.com/
 
+[![Build Status](https://travis-ci.com/alehuo/ObdBackend.svg?token=gaC7xtybK3sQe2uWiGwx&branch=master)](https://travis-ci.com/alehuo/ObdBackend)
 ![](https://david-dm.org/alehuo/ObdBackend.svg)
 
 ## License
