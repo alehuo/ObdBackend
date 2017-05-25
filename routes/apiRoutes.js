@@ -172,7 +172,7 @@ module.exports = function() {
           Heading: req.body.heading,
           Timestamp: req.body.ts}
         ).then(function(db) {
-        console.log("Create: " + db);
+        //console.log("Create: " + db);
         if (db) {
           res.status(200);
           res.json({success: true, message: 'Location data inserted'});
@@ -198,7 +198,7 @@ module.exports = function() {
         CarId: req.params.car
       }
     }).then(function(SensorData) {
-      console.log("SensorData: " + SensorData)
+      //console.log("SensorData: " + SensorData)
       if (SensorData) {
         res.status(200);
         res.json({success: true, message: 'Sensor history found', SensorData});
@@ -215,7 +215,7 @@ module.exports = function() {
   router.post('/sensordata', userAuthentication(db.User), function(req, res) {
     db.SensorData.sync().then(function() {
       db.SensorData.create({CarId: req.body.Car, Sensor: req.body.Sensor, Value: req.body.Value, Timestamp: req.body.Timestamp}).then(function(db) {
-        console.log("Create: " + db);
+        //console.log("Create: " + db);
         if (db) {
           res.status(200);
           res.json({success: true, message: 'Sensor history inserted'});
