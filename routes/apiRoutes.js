@@ -225,7 +225,7 @@ module.exports = function() {
         }
       }, function(err) {
         res.status(400);
-        res.json({success: false, message: 'Error'});
+        res.json({success: false, message: 'Error: ' + err});
       })
     })
   });

@@ -6,8 +6,10 @@ var express = require('express');
 var app = express();
 //Body parser
 var bodyParser = require('body-parser');
+
 //Database creation script
 var create_db = require('./database/create_db.js');
+
 //API routes
 var apiRoutes = require('./routes/apiRoutes.js');
 
@@ -15,22 +17,28 @@ var apiRoutes = require('./routes/apiRoutes.js');
 var port = process.env.PORT || 8080;
 
 //Use Body parser
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
-
-//Create database tables
-create_db();
+app.use(bodyParser.text());
 
 //Default route
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.send('Hello world! Visit the API at /api');
 });
 
 app.use('/api', apiRoutes());
 
-//Start Express
-app.listen(port, function(err) {
-  console.log('Listening on port', port);
+//Create database tables
+create_db((res) => {
+  console.log('Database tables created')
+  //Start Express
+  app.listen(port, function (err) {
+    console.log('Listening on port', port);
+    app.emit("appStarted");
+  });
+
 });
 
 module.exports = app;

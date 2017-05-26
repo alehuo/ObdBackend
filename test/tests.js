@@ -6,14 +6,19 @@ var chai = require('chai'),
 
 
 var port = process.env.PORT || 8080;
-var express = require('express');
+
 var app = require('../index');
 
 let should = chai.should();
 
-
-
 chai.use(chaiHttp);
+
+//Ensure that the app has started before we start running tests
+before(function (done) {
+  app.on("appStarted", function () {
+    done();
+  });
+});
 
 describe('/api/sensordata ', () => {
   it('GET, without auth, should return 401', (done) => {
@@ -21,6 +26,8 @@ describe('/api/sensordata ', () => {
       .get('/api/sensordata/1')
       .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
   });
@@ -34,6 +41,8 @@ describe('/api/sensordata ', () => {
       })
       .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
   });
@@ -49,6 +58,10 @@ describe('/api/sensordata ', () => {
         })
         .end(function (err, res) {
           res.should.have.status(200);
+          res.body.should.have.property("success", true);
+          res.body.should.have.property("message", "Sensor history inserted");
+          res.body.success.should.be.equal(true);
+          res.body.message.should.be.equal("Sensor history inserted");
           done();
         });
     })
@@ -61,19 +74,25 @@ describe('/api/car ', () => {
       .get('/api/car/1')
       .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
   });
-  it('POST, without auth, should return 401');
-  /*, (done) => {
-      chai.request(app)
-      .post('/car')
-      .send({Vin: '123', DisplayName: 'Toyoda'})
-      .end(function(err, res) {
+  /*it('POST, without auth, should return 401', (done) => {
+    chai.request(app)
+      .post('/api/car')
+      .send({
+        Vin: '123',
+        DisplayName: 'Toyoda'
+      })
+      .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
-    });*/
+  });*/
 });
 describe('/api/location ', () => {
   it('GET with ID 1, without auth, should return 401', (done) => {
@@ -81,19 +100,27 @@ describe('/api/location ', () => {
       .get('/api/location/1')
       .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
   });
-  it('POST, without auth, should return 401');
-  /*, (done) => {
-      chai.request(app)
-      .post('/location')
-      .send({GpsLon: 60.199172, GpsLat: 24.986826, CarId: 1, Timestamp: '2017-05-14 15:36:00'})
-      .end(function(err, res) {
+  it('POST, without auth, should return 401', (done) => {
+    chai.request(app)
+      .post('/api/location')
+      .send({
+        GpsLon: 24.986826,
+        GpsLat: 60.199172,
+        CarId: 1,
+        Timestamp: '2017-05-14 15:36:00'
+      })
+      .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
-    });*/
+  });
 });
 describe('/api/logging ', () => {
   it('GET with ID 1, without auth, should return 401', (done) => {
@@ -101,31 +128,43 @@ describe('/api/logging ', () => {
       .get('/api/logging/1')
       .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
   });
-  it('POST, without auth, should return 401');
-  /*, (done) => {
-      chai.request(app)
-      .post('/logging')
-      .send({Vin: '123', DisplayName: 'Toyoda'})
-      .end(function(err, res) {
+  it('POST, without auth, should return 401', (done) => {
+    chai.request(app)
+      .post('/api/logging')
+      .send({
+        Vin: '123',
+        DisplayName: 'Toyoda'
+      })
+      .end(function (err, res) {
         res.should.have.status(401);
+        res.body.should.have.property("success", false);
+        res.body.should.have.property("message", "No access token found");
         done();
       });
-    });*/
+  });
 });
 
-describe('Authentication test', () => {
+describe('/api/authentication', () => {
   it('Authentication with wrong credentials should return 400', (done) => {
-		authentication('wrong','credentials',(res) => {
+    authentication('wrong', 'credentials', (res) => {
       res.should.have.status(400);
+      res.body.should.have.property("success", false);
+      res.body.should.not.have.property("token");
+      res.body.should.have.property("message", "Invalid username or password");
       done();
     });
   });
   it('Authentication with correct credentials should return 200', (done) => {
-    authentication('user','user',(res) => {
+    authentication('user', 'user', (res) => {
       res.should.have.status(200);
+      res.body.should.have.property("success", true);
+      res.body.should.have.property("token");
+      res.body.should.have.property("message", "Authentication successful");
       done();
     });
   });

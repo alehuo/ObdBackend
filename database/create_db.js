@@ -2,7 +2,7 @@
 Database tables are created here
  */
 var db = require('./db.js');
-module.exports = function() {
+module.exports = function(fn) {
   db.User.sync({force: true}).then(function() {
     db.User.bulkCreate([
       {
@@ -87,6 +87,7 @@ module.exports = function() {
               loggingEnd: 1495529157000
             }
           ]);
+          fn(true)
         });
       });
     });
