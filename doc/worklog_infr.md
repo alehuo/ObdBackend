@@ -6,3 +6,5 @@
 | 14.5.2017    | Backend functionality: SensorData | 5h |
 | 15.5.2017    | Implementing & studying tests | 7h |
 | 19.5.2017 | Location loggin | 1h |
+|21.5.2017 | Backend tests with tokens, never got it to work. Adding functionality for start/stop logging | 10h |
+|Total | | 34h |
