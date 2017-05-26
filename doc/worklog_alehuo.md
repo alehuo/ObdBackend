@@ -9,3 +9,4 @@
 | 18.5.2017 | Added route to post location data. Modified LocationPoint database table | 1h |
 | 21.5.2017 | Added authentication testing & read about testing Node.js projects with Mocha | 4h |
 | 25.5.2017 | Fixed tests, connected Travis Ci to the git repository & made Travis automatically deploy to heroku. Updated project readme | 5h |
+| 26.5.2017 | Improved app reliability by moving the server start to an async callback made by create_db. Improved tests by making sure that the server is started before we start running tests. Also, started testing response body. | 3h |
